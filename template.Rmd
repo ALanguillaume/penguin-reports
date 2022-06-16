@@ -1,0 +1,36 @@
+---
+title: "Île de `r params$island`"
+author: "Antoine Languillaume"
+date: "`r Sys.Date()`"
+output: html_document
+params:
+  dataset: NULL
+  island: NULL
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE)
+library(ggplot2)
+```
+
+```{r, fig.align='center'}
+ggplot(params$dataset)+
+  aes( x = body_mass_g, y = flipper_length_mm, color = species)+
+  geom_point(na.rm = TRUE)+
+  scale_color_brewer(palette = "Set2")+
+  labs(
+    x = "Masse Corporelle (g)",
+    y = "Taille des Nageoires en (mm)",
+    color = "Espèce",
+    title = glue::glue(
+      "Relation entre la masse corporelle et la taille des nageoires",
+      " \n ",
+      "des pingouins de l'île {params$island}"
+    )
+  )+
+  theme(
+    plot.title = element_text(hjust = 0.5)
+  )+
+  theme_minimal()
+```
+
